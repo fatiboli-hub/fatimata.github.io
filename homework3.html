@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<textarea id="symptoms" name="symptoms" rows="4" required></textarea>
+<small class="msg" id="symptomsMsg"></small>
+
+
+<fieldset class="inline">
+<legend>Vaccinated?</legend>
+<label><input type="radio" name="vaccinated" value="Yes" required> Yes</label>
+<label><input type="radio" name="vaccinated" value="No"> No</label>
+</fieldset>
+</fieldset>
+
+
+<fieldset>
+<legend>Additional & Account Info</legend>
+
+
+<label for="salaryRange">Desired salary (use slider)</label>
+<div class="sliderRow">
+<input id="salaryRange" name="salaryRange" type="range" min="20000" max="200000" step="1000" value="60000">
+<output id="salaryValue">60000</output>
+</div>
+
+
+<label for="userID">User ID</label>
+<input id="userID" name="userID" type="text" minlength="5" maxlength="20" required
+placeholder="letters, numbers, - or _ (cannot start with digit)">
+<small class="msg" id="userIDMsg"></small>
+
+
+<label for="password">Password</label>
+<input id="password" name="password" type="password" required placeholder="At least 8 chars">
+
+
+<label for="password2">Re-enter Password</label>
+<input id="password2" name="password2" type="password" required>
+<small class="msg" id="passwordMsg"></small>
+</fieldset>
+
+
+<div class="formActions">
+<button type="button" id="validateBtn">Validate</button>
+<button type="submit" id="submitBtn" disabled>Submit</button>
+<button type="button" id="getDataBtn">Get Example Data</button>
+<button type="reset" id="resetBtn">Start Over</button>
+</div>
+
+
+</form>
+
+
+<section>
+<h2>Review Information</h2>
+<div id="reviewArea" aria-live="polite"></div>
+</section>
+</main>
+
+
+<script src="script.js"></script>
+</body>
+</html>
