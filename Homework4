@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Healthcare Registration Form — Assignment 4</title>
+
+<style>
+:root{--accent:#2E8B57;--page-bg:#dff0ff}
+*{box-sizing:border-box}
+body{font-family:Arial,Helvetica,sans-serif;margin:0;background:var(--page-bg);color:#111}
+header, footer{position:fixed;width:100%;background:#fff;z-index:999;box-shadow:0 2px 6px rgba(0,0,0,.1);padding:12px 20px}
+header{top:0;display:flex;justify-content:space-between;align-items:center}
+footer{bottom:0;text-align:center;font-size:.9rem}
+main{margin:120px 20px 60px 20px;max-width:920px}
+form{background:#fff;padding:14px;border-radius:8px;border:1px solid #e0e0e0;box-shadow:0 2px 6px rgba(0,0,0,.04)}
+fieldset{margin:10px 0;padding:12px;border-radius:6px;border:1px solid #ddd}
+legend{font-weight:700;color:#2b6}
+label{display:block;margin:8px 0;font-weight:600}
+input[type=text],input[type=password],input[type=email],input[type=tel],select,textarea{width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;font-size:0.95rem}
+.msg{display:block;height:1.1em;color:#a00;font-size:0.9em;margin-top:4px}
+.smallHint{font-size:0.9em;color:#444;margin-top:6px}
+.dobRow{display:flex;gap:8px}
+.dobRow select{width:33%}
+.inlineRadio{border:none;padding:0;margin:8px 0;display:flex;gap:12px;align-items:center}
+.formActions{margin-top:12px}
+button{padding:8px 12px;margin-right:8px;border-radius:6px;border:1px solid #bbb;background:#f5f5f5;cursor:pointer}
+button:disabled{opacity:0.5;cursor:not-allowed}
+.sliderRow{display:flex;align-items:center;gap:10px}
+#salaryValue{font-weight:700}
+#reviewArea{background:#fafafa;border:1px solid #ddd;padding:8px;border-radius:6px;margin-top:8px}
+table{border-collapse:collapse;width:100%}
+table,th,td{border:1px solid #ddd;padding:6px}
+th{background:#f2f2f2;text-align:left}
+#thankyou{display:none;text-align:center;padding:30px}
+iframe{width:100%;height:200px;border:1px solid #ccc;margin:12px 0;border-radius:6px}
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1 id="welcomeMsg">Welcome!</h1>
+    <div id="dateTime" style="font-weight:600;color:#034"></div>
+  </div>
+  <img src="Logo_de_Tima_Healthcare.png" alt="Logo" style="height:50px;border-radius:6px">
+</header>
+
+<footer>
+  <p>&copy; 2025 Tima Healthcare. All rights reserved.</p>
+</footer>
+
+<main>
+  <!-- Embedded iframe example -->
+  <iframe src="https://www.cdc.gov" title="CDC Health Info"></iframe>
+
+  <form id="registrationForm" novalidate>
+    <fieldset>
+      <legend>Personal Information</legend>
+      <label>First Name
+        <input id="firstName" name="firstName" type="text" maxlength="30" placeholder="Fatima" required>
+        <small class="msg" id="firstNameMsg" aria-live="polite"></small>
+      </label>
+      <label>Middle Initial (optional)
+        <input id="middleInitial" name="middleInitial" type="text" maxlength="1" placeholder="F">
+        <small class="msg" id="middleInitialMsg" aria-live="polite"></small>
+      </label>
+      <label>Last Name
+        <input id="lastName" name="lastName" type="text" maxlength="30" placeholder="Niang" required>
+        <small class="msg" id="lastNameMsg" aria-live="polite"></small>
+      </label>
+      <label>Date of Birth
+        <div class="dobRow">
+          <select id="dobMonth" required></select>
+          <select id="dobDay" required></select>
+          <select id="dobYear" required></select>
+        </div>
+        <small class="msg" id="dobMsg" aria-live="polite"></small>
+      </label>
+      <label>SSN
+        <input id="ssn" name="ssn" type="password" maxlength="11" placeholder="000-00-0000" required>
+        <small class="msg" id="ssnMsg" aria-live="polite"></small>
+      </label>
+    </fieldset>
+
+    <fieldset>
+      <legend>Contact Information</legend>
+      <label>Email
+        <input id="email" name="email" type="email" placeholder="name@domain.tld" required>
+        <small class="msg" id="emailMsg" aria-live="polite"></small>
+      </label>
+      <label>Phone (optional)
+        <input id="phone" name="phone" type="tel" placeholder="000-000-0000">
+        <small class="msg" id="phoneMsg" aria-live="polite"></small>
+      </label>
+    </fieldset>
+
+    <fieldset>
+      <legend>Address</legend>
+      <label>Address Line 1
+        <input id="address1" name="address1" type="text" minlength="2" maxlength="30" required>
+        <small class="msg" id="address1Msg" aria-live="polite"></small>
+      </label>
+      <label>Address Line 2 (optional)
+        <input id="address2" name="address2" type="text" maxlength="30">
+        <small class="msg" id="address2Msg" aria-live="polite"></small>
+      </label>
+      <label>City
+        <input id="city" name="city" type="text" minlength="2" maxlength="30" required>
+        <small class="msg" id="cityMsg" aria-live="polite"></small>
+      </label>
+      <label>State
+        <select id="state" name="state" required>
+          <option value="">Select a state</option>
+        </select>
+        <small class="msg" id="stateMsg" aria-live="polite"></small>
+      </label>
+      <label>Zip Code
+        <input id="zip" name="zip" type="text" maxlength="10" required placeholder="77001">
+        <small class="msg" id="zipMsg" aria-live="polite"></small>
+      </label>
+    </fieldset>
+
+    <fieldset>
+      <legend>Health History</legend>
+      <p class="smallHint">Check all that apply:</p>
+      <label><input type="checkbox" name="diseases" value="Chicken Pox"> Chicken Pox</label>
+      <label><input type="checkbox" name="diseases" value="Measles"> Measles</label>
+      <label><input type="checkbox" name="diseases" value="Mumps"> Mumps</label>
+      <label><input type="checkbox" name="diseases" value="Heart Disease"> Heart Disease</label>
+      <label><input type="checkbox" name="diseases" value="Diabetes"> Diabetes</label>
+      <label><input type="checkbox" name="diseases" value="Covid-19"> Covid-19</label>
+      <label>Describe Symptoms<textarea id="symptoms" required></textarea></label>
+      <fieldset class="inlineRadio">
+        <legend>Vaccinated?</legend>
+        <label><input type="radio" name="vaccinated" value="Yes" required> Yes</label>
+        <label><input type="radio" name="vaccinated" value="No"> No</label>
+        <label><input type="radio" name="vaccinated" value="Unsure"> Unsure</label>
+      </fieldset>
+    </fieldset>
+
+    <fieldset>
+      <legend>Desired Salary</legend>
+      <div class="sliderRow">
+        <input type="range" id="salaryRange" min="20000" max="200000" step="1000" value="60000">
+        <output id="salaryValue">60,000</output>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Account Information</legend>
+      <label>User ID<input id="userID" type="text" required></label>
+      <label>Password<input id="password" type="password" required></label>
+      <label>Re-enter Password<input id="password2" type="password" required></label>
+      <label><input type="checkbox" id="rememberMe" checked> Remember Me</label>
+    </fieldset>
+
+    <div class="formActions">
+      <button type="button" id="validateBtn">Validate</button>
+      <button type="submit" id="submitBtn" disabled>Submit</button>
+      <button type="button" id="getDataBtn">Get Example Data</button>
+      <button type="reset">Start Over</button>
+    </div>
+  </form>
+
+  <section id="reviewSection">
+    <h2>Review Information</h2>
+    <div id="reviewArea"></div>
+  </section>
+
+  <section id="thankyou">
+    <h1>Thank you for your submission.</h1>
+    <p>We will be contacting you shortly.</p>
+  </section>
+</main>
+
+<script>
+(function(){
+const qs = s=>document.querySelector(s);
+const qsa = s=>Array.from(document.querySelectorAll(s));
+const form = qs('#registrationForm');
+const firstName = qs('#firstName');
+const dobMonth = qs('#dobMonth'); const dobDay=qs('#dobDay'); const dobYear=qs('#dobYear');
+const stateEl = qs('#state'); const submitBtn=qs('#submitBtn'); const salaryRange=qs('#salaryRange'); const salaryValue=qs('#salaryValue');
+const welcomeMsg = qs('#welcomeMsg'); const rememberMe = qs('#rememberMe');
+
+// Time-based date display
+function updateDateTime(){ qs('#dateTime').textContent = new Date().toLocaleString(); }
+updateDateTime(); setInterval(updateDateTime,1000);
+
+// Populate DOB selects
+(function(){ for(let i=1;i<=12;i++){dobMonth.innerHTML+=`<option value="${i}">${String(i).padStart(2,'0')}</option>`;}
+for(let i=1;i<=31;i++){dobDay.innerHTML+=`<option value="${i}">${String(i).padStart(2,'0')}</option>`;}
+const yearNow=new Date().getFullYear(); for(let y=yearNow;y>=yearNow-120;y--){dobYear.innerHTML+=`<option value="${y}">${y}</option>`;} })();
+
+// Fetch states with fallback
+const statesFallback = [
+  {"name":"Alabama","abbr":"AL"},{"name":"Alaska","abbr":"AK"},{"name":"Arizona","abbr":"AZ"},
+  {"name":"Arkansas","abbr":"AR"},{"name":"California","abbr":"CA"},{"name":"Colorado","abbr":"CO"},
+  {"name":"Connecticut","abbr":"CT"},{"name":"Delaware","abbr":"DE"},{"name":"District of Columbia","abbr":"DC"},
+  {"name":"Florida","abbr":"FL"},{"name":"Georgia","abbr":"GA"},{"name":"Hawaii","abbr":"HI"},
+  {"name":"Idaho","abbr":"ID"},{"name":"Illinois","abbr":"IL"},{"name":"Indiana","abbr":"IN"},
+  {"name":"Iowa","abbr":"IA"},{"name":"Kansas","abbr":"KS"},{"name":"Kentucky","abbr":"KY"},
+  {"name":"Louisiana","abbr":"LA"},{"name":"Maine","abbr":"ME"},{"name":"Maryland","abbr":"MD"},
+  {"name":"Massachusetts","abbr":"MA"},{"name":"Michigan","abbr":"MI"},{"name":"Minnesota","abbr":"MN"},
+  {"name":"Mississippi","abbr":"MS"},{"name":"Missouri","abbr":"MO"},{"name":"Montana","abbr":"MT"},
+  {"name":"Nebraska","abbr":"NE"},{"name":"Nevada","abbr":"NV"},{"name":"New Hampshire","abbr":"NH"},
+  {"name":"New Jersey","abbr":"NJ"},{"name":"New Mexico","abbr":"NM"},{"name":"New York","abbr":"NY"},
+  {"name":"North Carolina","abbr":"NC"},{"name":"North Dakota","abbr":"ND"},{"name":"Ohio","abbr":"OH"},
+  {"name":"Oklahoma","abbr":"OK"},{"name":"Oregon","abbr":"OR"},{"name":"Pennsylvania","abbr":"PA"},
+  {"name":"Puerto Rico","abbr":"PR"},{"name":"Rhode Island","abbr":"RI"},{"name":"South Carolina","abbr":"SC"},
+  {"name":"South Dakota","abbr":"SD"},{"name":"Tennessee","abbr":"TN"},{"name":"Texas","abbr":"TX"},
+  {"name":"Utah","abbr":"UT"},{"name":"Vermont","abbr":"VT"},{"name":"Virginia","abbr":"VA"},
+  {"name":"Washington","abbr":"WA"},{"name":"West Virginia","abbr":"WV"},{"name":"Wisconsin","abbr":"WI"},
+  {"name":"Wyoming","abbr":"WY"}
+];
+
+fetch('states.json')
+  .then(r => { if(!r.ok) throw new Error("Fetch failed"); return r.json(); })
+  .then(states => states.forEach(s => stateEl.innerHTML += `<option value="${s.abbr}">${s.name} (${s.abbr})</option>`))
+  .catch(err => { console.warn('Fetch failed, using fallback:', err); statesFallback.forEach(s => stateEl.innerHTML += `<option value="${s.abbr}">${s.name} (${s.abbr})</option>`); });
+
+// Load from LocalStorage
+if(localStorage.getItem('userForm')){ const data=JSON.parse(localStorage.getItem('userForm')); Object.keys(data).forEach(k=>{ const el=qs('#'+k); if(el){ if(el.type==='checkbox'){el.checked=data[k]} else if(el.type==='radio'){qsa(`[name="${k}"]`).forEach(r=>r.checked=r.value===data[k])} else el.value=data[k]; } }); }
+
+// Cookies
+function setCookie(name,value,days){ const d=new Date(); d.setTime(d.getTime()+days*24*60*60*1000); document.cookie=`${name}=${value};expires=${d.toUTCString()};path=/`; }
+function getCookie(name){ const c=document.cookie.split('; ').find(r=>r.startsWith(name+'=')); return c?c.split('=')[1]:null; }
+const savedName=getCookie('firstName');
+if(savedName){ welcomeMsg.textContent=`Welcome back, ${savedName}`; firstName.value=savedName; } else { welcomeMsg.textContent='Welcome New user'; }
+
+// Slider display
+salaryValue.textContent=Number(salaryRange.value).toLocaleString();
+salaryRange.addEventListener('input',()=>{salaryValue.textContent=Number(salaryRange.value).toLocaleString();});
+
+// Validate and enable submit
+function validateAll(){ const ok=firstName.value.trim().length>0; submitBtn.disabled=!ok; return ok; }
+qs('#validateBtn').addEventListener('click',()=>{ if(validateAll()) alert('All fields valid'); else alert('Fix errors'); });
+
+// Form submit
+form.addEventListener('submit',e=>{ e.preventDefault(); if(!validateAll()){alert('Fix errors'); return;} if(rememberMe.checked) setCookie('firstName',firstName.value,2); localStorage.setItem('userForm',JSON.stringify(Object.fromEntries(new FormData(form)))); form.style.display='none'; qs('#reviewSection').style.display='none'; qs('#thankyou').style.display='block'; });
+
+// Auto-save to localStorage
+qsa('input,select,textarea').forEach(el=>{ el.addEventListener('change',()=>{ const data=Object.fromEntries(new FormData(form)); if(!rememberMe.checked){ localStorage.removeItem('userForm'); } else localStorage.setItem('userForm',JSON.stringify(data)); }); });
+
+})();
+</script>
+</body>
+</html>
+
